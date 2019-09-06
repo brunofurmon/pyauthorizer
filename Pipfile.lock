@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "54fb7116c925d127f582e74ef54498f0703db24b1539b2150ef3bf66574fa440"
+            "sha256": "ed63b31f068d51bac7a2fd34e605f75dbafcc8c96209103c96edcd09c836d424"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -15,12 +15,7 @@
             }
         ]
     },
-    "default": {
-        "myproject": {
-            "editable": true,
-            "path": "."
-        }
-    },
+    "default": {},
     "develop": {
         "astroid": {
             "hashes": [

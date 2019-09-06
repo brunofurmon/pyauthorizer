@@ -7,7 +7,6 @@ verify_ssl = true
 pylint = "*"
 
 [packages]
-nubank-challenge = {editable = true,path = "."}
 
 [requires]
 python_version = "3.7"
