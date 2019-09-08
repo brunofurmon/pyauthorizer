@@ -1,0 +1,2 @@
+class CommandBus(object):
+    pass

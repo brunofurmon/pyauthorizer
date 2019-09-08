@@ -1,7 +1,8 @@
 import json
 from src.domain.model.account import Account
+from src.contracts.cqrs.command import Command
 
-class CreateAccount(object):
+class CreateAccount(Command):
     def __init__(self, line):
         self.accountToCreate = CreateAccount.parseAccountCreation(line)
     

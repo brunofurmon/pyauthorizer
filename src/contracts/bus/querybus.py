@@ -1,0 +1,2 @@
+class QueryBus(object):
+    pass
