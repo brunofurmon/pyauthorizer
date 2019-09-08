@@ -12,3 +12,12 @@ class Account(Model):
             self.created_at,
             'Active' if self.activeCard else 'Not Active', 
             self.availableLimit)
+    
+    def toDict(self):
+        return { 
+            "account": 
+            {
+                "activeCard": self.activeCard,
+                "availableLimit": self.availableLimit 
+            }
+        }

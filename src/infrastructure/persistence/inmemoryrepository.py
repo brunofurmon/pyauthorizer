@@ -1,6 +1,6 @@
 from src.contracts.repository.repository import Repository
 from src.domain.model.model import Model
-from time import time
+from datetime import datetime
 import uuid
 
 class InMemoryRepository(Repository):
@@ -22,7 +22,7 @@ class InMemoryRepository(Repository):
             return 0
 
         entity.id = uuid.uuid4()
-        entity.created_at = time()
+        entity.created_at = datetime.utcnow().isoformat()
         self.dbSet[entity.id] = entity
 
         return 1
@@ -53,3 +53,21 @@ class InMemoryRepository(Repository):
             return entity
         except:
             return
+    
+    def update(self, entity):
+        ''' Updates an entity based on its id field
+
+            Keyword arguments:
+            entity -- An object that derives type Model and exists in self.dbSet
+        
+            Returns:
+            The number of altered rows
+        '''
+        assert issubclass(type(entity), Model), '{} entity must be of type \'Model\''.format(entity)
+        if not entity.id in self.dbSet:
+            return 0
+
+        self.updated_at = datetime.utcnow().isoformat()
+        self.dbSet[entity.id] = entity
+
+        return 1

@@ -2,7 +2,7 @@ import sys
 import json
 
 from src.domain.commands.account.createaccount import CreateAccount
-from src.domain.commands.account.createaccount import CreateAccount
+from src.domain.commands.transaction.authorizetransaction import AuthorizeTransaction
 from src.domain.commandhandlers.account.accountcommandhandler import AccountCommandHandler
 from src.domain.commandhandlers.transaction.transactioncommandhandler import TransactionCommandHandler
 
@@ -24,8 +24,7 @@ def getCommandFromJson(line):
 
     # Transaction
     else:
-        # command = CreateTransaction
-        pass
+        command = AuthorizeTransaction(line)
     
     return command
 
@@ -35,27 +34,24 @@ def main():
     
     # Repository Setup
     accountRepository = InMemoryRepository()
+    transactionRepository = InMemoryRepository()
 
     # Command Bus Setup
     commandBus = InMemoryCommandBus()
 
     accountCommandsHandler = AccountCommandHandler(accountRepository)
     commandBus.subscribe(accountCommandsHandler)
-    # commandBus.subscribe(TransactionCommandHandler())
 
-    # Query Bus Setup
-    queryBus = InMemoryQueryBus()
+    transactionCommandsHandler = TransactionCommandHandler(transactionRepository, accountRepository)
+    commandBus.subscribe(transactionCommandsHandler)
 
+    # Main loop
     for line in sys.stdin:
         command = getCommandFromJson(line)
 
-        violations = commandBus.send(command)
+        result = commandBus.send(command)
+        output = json.dumps(result)
 
-        output = json.loads(line)
-
-        if violations:
-            output.update({'violations': violations})
-        
         print(output)
 
 if __name__ == '__main__':

@@ -24,10 +24,19 @@ class AccountCommandHandler(CommandHandler):
         '''
         assert isinstance(command, CreateAccount), '{} must be of type \'CreateAccount\''.format(command)
 
+        violations = []
+        account = command.accountToCreate
+
         existingAccounts = self.accountRepository.getByFilter(lambda account: True)
 
         if existingAccounts:
-            return ['account-already-initialized']
+            violations += ['account-already-initialized']
+            return account.toDict().update({'violations': violations})
 
-        self.accountRepository.add(command.accountToCreate)
+        self.accountRepository.add(account)
+
+        returnDict = account.toDict()
+        returnDict.update({'violations': violations})
+
+        return returnDict
     
