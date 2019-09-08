@@ -2,8 +2,7 @@ from src.domain.model.model import Model
 
 class Account(Model):    
     def __init__(self, activeCard, availableLimit):
-        self.id = None
-        self.created_at = None
+        super().__init__()
         self.activeCard = activeCard
         self.availableLimit = availableLimit
     

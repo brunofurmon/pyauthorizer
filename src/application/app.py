@@ -1,16 +1,23 @@
 import sys
+import json
 
 from src.domain.commands.account.createaccount import CreateAccount
 from src.domain.commands.account.createaccount import CreateAccount
 from src.domain.commandhandlers.account.accountcommandhandler import AccountCommandHandler
 from src.domain.commandhandlers.transaction.transactioncommandhandler import TransactionCommandHandler
+
 from src.infrastructure.bus.inmemorycommandbus import InMemoryCommandBus
 from src.infrastructure.bus.inmemoryquerybus import InMemoryQueryBus
+from src.infrastructure.persistence.inmemoryrepository import InMemoryRepository
+
+# Repository Setup
+accountRepository = InMemoryRepository()
 
 # Command Bus Setup
 commandBus = InMemoryCommandBus()
 
-commandBus.subscribe(AccountCommandHandler())
+accountCommandsHandler = AccountCommandHandler(accountRepository)
+commandBus.subscribe(accountCommandsHandler)
 # commandBus.subscribe(TransactionCommandHandler())
 
 # Query Bus Setup
@@ -27,12 +34,11 @@ def getCommandFromJson(line):
     # Processing an account
     if '"account"' in line:
         command = CreateAccount(line)
-        print("I'll process an account: {}".format(command.accountToCreate))
 
     # Transaction
     else:
-        print("I'll process a transaction", line)
         # command = CreateTransaction
+        pass
     
     return command
 
@@ -42,8 +48,14 @@ def main():
     for line in sys.stdin:
         command = getCommandFromJson(line)
 
-        response = commandBus.send(command)
-        print(response)
+        violations = commandBus.send(command)
+
+        output = json.loads(line)
+
+        if violations:
+            output.update({'violations': violations})
+        
+        print(output)
 
 if __name__ == '__main__':
     main()
