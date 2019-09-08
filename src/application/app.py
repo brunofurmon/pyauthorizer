@@ -10,19 +10,6 @@ from src.infrastructure.bus.inmemorycommandbus import InMemoryCommandBus
 from src.infrastructure.bus.inmemoryquerybus import InMemoryQueryBus
 from src.infrastructure.persistence.inmemoryrepository import InMemoryRepository
 
-# Repository Setup
-accountRepository = InMemoryRepository()
-
-# Command Bus Setup
-commandBus = InMemoryCommandBus()
-
-accountCommandsHandler = AccountCommandHandler(accountRepository)
-commandBus.subscribe(accountCommandsHandler)
-# commandBus.subscribe(TransactionCommandHandler())
-
-# Query Bus Setup
-queryBus = InMemoryQueryBus()
-
 def getCommandFromJson(line):
     ''' Dispatches the current @line command
 
@@ -45,6 +32,20 @@ def getCommandFromJson(line):
 def main():
     # Operates each line from STDIN. Supposing the program is called as following:
     # python ./src/application/app.py < operations
+    
+    # Repository Setup
+    accountRepository = InMemoryRepository()
+
+    # Command Bus Setup
+    commandBus = InMemoryCommandBus()
+
+    accountCommandsHandler = AccountCommandHandler(accountRepository)
+    commandBus.subscribe(accountCommandsHandler)
+    # commandBus.subscribe(TransactionCommandHandler())
+
+    # Query Bus Setup
+    queryBus = InMemoryQueryBus()
+
     for line in sys.stdin:
         command = getCommandFromJson(line)
 
