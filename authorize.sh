@@ -2,4 +2,4 @@
 
 source $(pipenv --venv)/bin/activate
 
-python ./src/application/app.py < ./test/scenarios/templateScenario
+python ./src/application/app.py < ./operations
