@@ -1,0 +1,5 @@
+{ "account": { "activeCard": true, "availableLimit": 100 } }
+{ "transaction": { "merchant": "Burger King", "amount": 10, "time": "2019-02-13T10:00:00.000Z" } }
+{ "transaction": { "merchant": "Burger King", "amount": 10, "time": "2019-02-13T10:01:00.000Z" } }
+{ "transaction": { "merchant": "Burger King", "amount": 10, "time": "2019-02-13T10:02:00.000Z" } }
+{ "transaction": { "merchant": "Burger King", "amount": 10, "time": "2019-02-13T10:03:00.000Z" } }

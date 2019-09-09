@@ -50,23 +50,24 @@ class TransactionCommandHandler(CommandHandler):
         minDiffInMinutes = 2
         fromDatetime = transactionTime - timedelta(minutes=minDiffInMinutes)
 
-        recentTransactions = self.transactionRepository.getByFilter(lambda transaction: transaction.time >= fromDatetime )
+        recentTransactions = self.transactionRepository.getByFilter(lambda transactions: transactions.time >= fromDatetime )
         
-        if len(recentTransactions) > 3:
+        if len(recentTransactions) >= 3:
             violations += ['high-frequency-small-interval']
             return TransactionCommandHandler.getAccountAndViolationsDict(account, violations)
 
         # •	There should not be more than 2 similar transactions (same amount and merchant) in a 2 minutes interval: doubled-transaction
-        doubledTransactions = list(filter(lambda transaction: \
-            transaction.amount == transaction.amount \
-            and transaction.merchant == transaction.merchant \
+        doubledTransactions = list(filter(lambda transactions: \
+            transactions.amount == transaction.amount \
+            and transactions.merchant == transaction.merchant \
             , recentTransactions))
 
-        if doubledTransactions and doubledTransactions > 1:
+        if doubledTransactions and len(doubledTransactions) > 1:
             violations += ['doubled-transaction']
             return TransactionCommandHandler.getAccountAndViolationsDict(account, violations)
 
         # Everything should be fine down here
+        transaction.time = transactionTime
         self.transactionRepository.add(transaction)
 
         account.availableLimit -= transaction.amount

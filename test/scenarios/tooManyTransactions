@@ -1,0 +1,5 @@
+{ "account": { "activeCard": true, "availableLimit": 100 } }
+{ "transaction": { "merchant": "Burger King", "amount": 10, "time": "2019-02-13T10:00:00.000Z" } }
+{ "transaction": { "merchant": "Sam's Club", "amount": 10, "time": "2019-02-13T10:00:30.000Z" } }
+{ "transaction": { "merchant": "McDonalds", "amount": 10, "time": "2019-02-13T10:01:00.000Z" } }
+{ "transaction": { "merchant": "King of Salads", "amount": 10, "time": "2019-02-13T10:01:59.999Z" } }
