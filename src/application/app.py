@@ -1,4 +1,8 @@
 import sys
+import os
+
+sys.path.append('./')
+
 import json
 
 from src.domain.commands.account.createaccount import CreateAccount

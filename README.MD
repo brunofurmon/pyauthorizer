@@ -25,7 +25,7 @@ OUTPUT >
 
 ## Development environment activation
 This project uses a virtual environment (pipenv), so first you should install and activate like following:
-   - `pipenv install`
+   - `pipenv install --three`
    - `./authorize.sh` (runs a `source $(pipenv --venv)/bin/activate` and a `python ./src/application/app.py < ./test/scenarios/templateScenario`)
 
 ## Test Execution 

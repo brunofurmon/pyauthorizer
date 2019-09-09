@@ -4,10 +4,11 @@ RUN apk update
 RUN pip install --no-cache-dir pipenv
 
 WORKDIR /usr/src/app
-COPY Pipfile Pipfile.lock bootstrap.sh ./
+COPY Pipfile Pipfile.lock authorize.sh ./
 COPY src ./src
+COPY test ./test
 
 RUN pipenv install
 
 EXPOSE 5000
-ENTRYPOINT ["/usr/src/app/bootstrap.sh"]
+CMD ["sh", "./authorize.sh"]
