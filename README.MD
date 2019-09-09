@@ -11,9 +11,9 @@ This project is dockerized, so running equals building its image and running. Ru
   - `docker-compose build --no-cache` - Build image called brunofurmon/nubank-challenge:1.0
   - `docker-compose up` - Executes the image in a container and binds its host:port to the host.
 
-This will run the application/app.py module and insert the `./test/scenarios/templateScenario` into the STDIN, which should give the following Input/Output:
+This will run the application/app.py module and insert the `./operations` into the STDIN, which should give the following Input/Output:
 
-STDIN < `./test/scenarios/templateScenario`
+STDIN < `./operations`
 { "account": { "activeCard": true, "availableLimit": 100 } }
 { "transaction": { "merchant": "Burger King", "amount": 20, "time": "2019-02-13T10:00:00.000Z" } }
 { "transaction": { "merchant": "Habbib's", "amount": 90, "time": "2019-02-13T11:00:00.000Z" } }
@@ -22,6 +22,8 @@ OUTPUT >
 {"account": {"activeCard": true, "availableLimit": 100}, "violations": []}
 {"account": {"activeCard": true, "availableLimit": 80}, "violations": []}
 {"account": {"activeCard": true, "availableLimit": 80}, "violations": ["insufficient-limit"]}
+
+To test other files, substitute the _operations_ file and run again using the instructions above.
 
 ## Development environment activation
 This project uses a virtual environment (pipenv), so first you should install and activate like following:
