@@ -31,10 +31,16 @@ class AccountCommandHandler(CommandHandler):
 
         if existingAccounts:
             violations += ['account-already-initialized']
-            return account.toDict().update({'violations': violations})
+            returnDict = AccountCommandHandler.getAccountAndViolationsDict(account, violations)
 
         self.accountRepository.add(account)
 
+        returnDict = AccountCommandHandler.getAccountAndViolationsDict(account, violations)
+
+        return returnDict
+    
+    @staticmethod
+    def getAccountAndViolationsDict(account, violations):
         returnDict = account.toDict()
         returnDict.update({'violations': violations})
 
