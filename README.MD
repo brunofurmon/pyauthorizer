@@ -43,9 +43,9 @@ It will generate a file called `Generated(<random10CharactersString>)` under the
 From the root folder, execute:
 - `python ./test generator.py`
 
-### (TODO!) Unit tests
-_pytest_ is a cool option! From the _test_ directory, replicate the _src_ structure and create _test_*.py_ files testing each source when applicable. Then run from the root folder, which calls pytest as a module, avoiding problems with module instantiation from "src module"
-- `python3 -m pytest`
+### Unit tests
+From the _test_ directory, the _src_ structure is replicated with _test_*.py_ files testing each source when applicable. To run them, it is required that you activate the virtual environment (`source $(pipenv --venv)/bin/activate`) and have pytest installed via `pip install pytest`. Then run from the root folder, call pytest as a module to avoid problems with module instantiation from "src module":
+- `python -m pytest`
 
 ## Architecture
 _"Simple, not easy"_ - @RonJeffries
