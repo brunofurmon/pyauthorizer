@@ -1,5 +1,8 @@
 import sys
 import os 
+
+sys.path.append('./')
+
 from src.application import app
 
 if __name__ == '__main__':
