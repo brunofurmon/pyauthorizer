@@ -21,3 +21,10 @@ class Account(Model):
                 "availableLimit": self.availableLimit 
             }
         }
+
+    @staticmethod
+    def getAccountAndViolationsDict(account, violations):
+        returnDict = account.toDict()
+        returnDict['violations'] = violations
+
+        return returnDict

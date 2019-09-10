@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from src.contracts.cqrs.commandhandler import CommandHandler
 from src.contracts.repository.repository import Repository
 from src.domain.commands.transaction.authorizetransaction import AuthorizeTransaction
+from src.domain.model.account import Account
 
 class TransactionCommandHandler(CommandHandler):
     def __init__(self, transactionRepository, accountRepository):
@@ -37,12 +38,12 @@ class TransactionCommandHandler(CommandHandler):
         # •	No transaction should be accepted when the card is not active: card-not-active
         if not account.activeCard:
             violations += ['card-not-active']
-            return TransactionCommandHandler.getAccountAndViolationsDict(account, violations)
+            return Account.getAccountAndViolationsDict(account, violations)
 
         # •	The transaction amount should not exceed available limit: insufficient-limit
         if account.availableLimit < transaction.amount:
             violations += ['insufficient-limit']
-            return TransactionCommandHandler.getAccountAndViolationsDict(account, violations)
+            return Account.getAccountAndViolationsDict(account, violations)
 
         # •	There should not be more than 3 transactions on a 2 minute interval: high-frequency-small-interval
         transactionTime = datetime.strptime(transaction.time, '%Y-%m-%dT%H:%M:%S.%fZ')
@@ -54,7 +55,7 @@ class TransactionCommandHandler(CommandHandler):
         
         if len(recentTransactions) >= 3:
             violations += ['high-frequency-small-interval']
-            return TransactionCommandHandler.getAccountAndViolationsDict(account, violations)
+            return Account.getAccountAndViolationsDict(account, violations)
 
         # •	There should not be more than 2 similar transactions (same amount and merchant) in a 2 minutes interval: doubled-transaction
         doubledTransactions = list(filter(lambda transactions: \
@@ -64,7 +65,7 @@ class TransactionCommandHandler(CommandHandler):
 
         if doubledTransactions and len(doubledTransactions) > 1:
             violations += ['doubled-transaction']
-            return TransactionCommandHandler.getAccountAndViolationsDict(account, violations)
+            return Account.getAccountAndViolationsDict(account, violations)
 
         # Everything should be fine down here
         transaction.time = transactionTime
@@ -73,11 +74,4 @@ class TransactionCommandHandler(CommandHandler):
         account.availableLimit -= transaction.amount
         self.accountRepository.update(account)
 
-        return TransactionCommandHandler.getAccountAndViolationsDict(account, violations)
-
-    @staticmethod
-    def getAccountAndViolationsDict(account, violations):
-        returnDict = account.toDict()
-        returnDict.update({'violations': violations})
-
-        return returnDict
+        return Account.getAccountAndViolationsDict(account, violations)

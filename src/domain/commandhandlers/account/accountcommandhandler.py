@@ -1,6 +1,7 @@
 from src.contracts.cqrs.commandhandler import CommandHandler
 from src.contracts.repository.repository import Repository
 from src.domain.commands.account.createaccount import CreateAccount
+from src.domain.model.account import Account
 
 class AccountCommandHandler(CommandHandler):
     def __init__(self, accountRepository):
@@ -35,14 +36,7 @@ class AccountCommandHandler(CommandHandler):
 
         self.accountRepository.add(account)
 
-        returnDict = AccountCommandHandler.getAccountAndViolationsDict(account, violations)
-
-        return returnDict
-    
-    @staticmethod
-    def getAccountAndViolationsDict(account, violations):
-        returnDict = account.toDict()
-        returnDict.update({'violations': violations})
+        returnDict = Account.getAccountAndViolationsDict(account, violations)
 
         return returnDict
     

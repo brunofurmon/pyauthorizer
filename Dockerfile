@@ -6,7 +6,6 @@ RUN pip install --no-cache-dir pipenv
 WORKDIR /usr/src/app
 COPY Pipfile Pipfile.lock authorize.sh operations ./
 COPY src ./src
-COPY test ./test
 
 RUN pipenv install
 
