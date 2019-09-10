@@ -67,7 +67,7 @@ class InMemoryRepository(Repository):
         if not entity.id in self.dbSet:
             return 0
 
-        self.updated_at = datetime.utcnow().isoformat()
+        entity.updated_at = datetime.utcnow().isoformat()
         self.dbSet[entity.id] = entity
 
         return 1

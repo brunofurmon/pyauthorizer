@@ -2,8 +2,6 @@ from src.contracts.cqrs.command import Command
 from src.contracts.bus.commandbus import CommandBus
 
 class InMemoryCommandBus(CommandBus):
-    def __init__(self):
-        pass
     
     def subscribe(self, handler):
         # Gets all handle_* functions and addresses into the bus.
@@ -12,7 +10,7 @@ class InMemoryCommandBus(CommandBus):
 
             func = getattr(handler, handlerFuncName)
 
-            assert callable(func), '{} must be a callable'.format(func.__name__)
+            assert callable(func), '{} must be callable'.format(func)
 
             setattr(self, '_{}_handler'.format(commandHandlerFuncName), func)
 
