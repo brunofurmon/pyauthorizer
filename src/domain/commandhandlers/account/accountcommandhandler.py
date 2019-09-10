@@ -32,7 +32,7 @@ class AccountCommandHandler(CommandHandler):
 
         if existingAccounts:
             violations += ['account-already-initialized']
-            returnDict = Account.getAccountAndViolationsDict(account, violations)
+            return Account.getAccountAndViolationsDict(existingAccounts[0], violations)
 
         self.accountRepository.add(account)
 
