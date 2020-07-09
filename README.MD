@@ -8,7 +8,7 @@
 
 ## Installing and Running
 This project is dockerized, so running equals building its image and running. Run:
-  - `docker-compose build --no-cache` - Build image called brunofurmon/nubank-challenge:1.0
+  - `docker-compose build --no-cache` - Build image called brunofurmon/brunofurmon-pyauthorizer:1.0
   - `docker-compose up` - Executes the image in a container and binds its host:port to the host.
 
 This will run the application/app.py module and insert the `./operations` into the STDIN, which should give the following Input/Output:
