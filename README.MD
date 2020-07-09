@@ -1,4 +1,4 @@
-# Python Authorizer Example
+# Python Transaction Authorizer Example
 
 ## Requirements
 - Docker (ou Docker for Windows): https://docs.docker.com/install/
